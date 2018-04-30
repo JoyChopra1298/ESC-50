@@ -3,7 +3,7 @@ Classifiers for the Environmental Sound Classification dataset.
 
 Directory Structure
 
-/								(root directory where you want to store data)
+//								(root directory where you want to store data)
 	audio/ 						(contains all 2000 recordings)
 	category_target.pkl			(Category target dictionary)
 	pickled/					(Contains pickled dataset after using utils.pickle_dataset())	
