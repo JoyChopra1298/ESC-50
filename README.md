@@ -20,8 +20,8 @@ Steps to run -
 
 1. Get the audio files from ESC-50 github. https://github.com/karoldvl/ESC-50.git
 2. Run pickle_dataset from utils.py. It will compute the features for each clip and store them
-3. Then run train from CNN.py for each fold.
-4. Run evaluate from CNN.py to evaluate the models.
+3. Then run train from main.py for each fold.
+4. Run evaluate from main.py to evaluate the models.
 
 Source Code -
 1. clip.py - contains class Clip for audio clip. Features such as Phase encoded Mel Filterbank Energies (PEFBEs) and Filterbank Energies (FBEs) are extracted here.
