@@ -3,16 +3,16 @@ Classifiers for the Environmental Sound Classification dataset.
 
 Directory Structure
 
-//								(root directory where you want to store data)
-	audio/ 						(contains all 2000 recordings)
-	category_target.pkl			(Category target dictionary)
-	pickled/					(Contains pickled dataset after using utils.pickle_dataset())	
-	model/
-		fold1/					(Contains model trained with fold 1 as validation set. Also has log file of the training process.)
-		fold2/
-		fold3/
-		fold4/
-		fold5/
+|				(root directory where you want to store data)
+|--audio/ 			(contains all 2000 recordings)
+|--category_target.pkl		(Category target dictionary)
+|--pickled/			(Contains pickled dataset after using utils.pickle_dataset())	
+|--model/
+	|--fold1/		(Contains model trained with fold 1 as validation set. Also has log file of the training process.)
+	|--fold2/
+	|--fold3/
+	|--fold4/
+	|--fold5/
 
 Each fold has a csv file storing training log and .hdf5 storing trained model's weights.
 
