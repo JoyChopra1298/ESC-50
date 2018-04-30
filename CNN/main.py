@@ -12,6 +12,9 @@ import os
 ####### Load dataset
 clips = utils.load_dataset("./ESC-50-master/pickled")
 
+def get_features(clip):
+	return np.stack((clip.PElog_spectra[:,:,i],clip.PElog_delta[:,:,i]),axis=-1)
+
 def train(save_path,fold=1):
 	# Note save_path should be a directory
 
@@ -24,7 +27,7 @@ def train(save_path,fold=1):
 		for clip in clips[fold]:
 			for i in range(clip.PElog_spectra.shape[2]):
 				fold_y.append(keras.utils.to_categorical(clip.target,num_classes=50))
-				fold_x.append(np.stack((clip.PElog_spectra[:,:,i],clip.PElog_delta[:,:,i]),axis=-1))
+				fold_x.append(get_features(clip))
 		x[int(fold)] = np.array(fold_x)
 		y[int(fold)] = np.array(fold_y)
 
@@ -73,12 +76,12 @@ def predict(load_path):
 		for clip in clips[fold]:
 			print(clip)
 			x = [] 
-			x.append(np.stack((clip.mel_spectra[:,:,0],clip.log_spectra[:,:,0],clip.log_delta[:,:,0],clip.log_delta2[:,:,0]),axis=-1))
+			x.append(get_features(clip))
 			x = np.array(x)
 			clip_prediction = model.model.predict(x,1) 
 			for i in range(1,clip.PElog_spectra.shape[2]):
 				x = [] 
-				x.append(np.stack((clip.mel_spectra[:,:,i],clip.log_spectra[:,:,i],clip.log_delta[:,:,i],clip.log_delta2[:,:,i]),axis=-1))
+				x.append(get_features(clip))
 				x = np.array(x)
 				clip_prediction *= model.model.predict(x,1)  # multiply probabilities for the segments
 			print(np.argmax(prediction),clip.target)	
@@ -99,7 +102,7 @@ def evaluate(load_path):
 		for clip in clips[fold]:
 			for i in range(clip.PElog_spectra.shape[2]):
 				fold_y.append(keras.utils.to_categorical(clip.target,num_classes=50))
-				fold_x.append(np.stack((clip.mel_spectra[:,:,i],clip.log_spectra[:,:,i],clip.log_delta[:,:,i],clip.log_delta2[:,:,i]),axis=-1))
+				fold_x.append(get_features(clip))
 		x[int(fold)] = np.array(fold_x)
 		y[int(fold)] = np.array(fold_y)
 
