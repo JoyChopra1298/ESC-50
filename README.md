@@ -14,7 +14,7 @@ Directory Structure
 	|--fold4/
 	|--fold5/
 ```
-Each fold has a csv file storing training log and .hdf5 storing trained model's weights.
+Each fold folder has a log.csv file storing training log and weights_best.hdf5 storing trained model's weights.
 
 Steps to run -  
 
@@ -24,7 +24,7 @@ Steps to run -
 4. Run evaluate from CNN.py to evaluate the models.
 
 Source Code -
-1. clip.py - Contains class Clip for audio clip. Features such as Phase encoded Mel Filterbank Energies (PEFBEs) and Filterbank Energies (FBEs) are extracted here.
-2. model.py - Contains Model class which makes the CNN model's architechture.
-3. main.py - Contains the functions to train,predict and evaluate the model.
-4. utils.py - Contains functions for saving and loading the dataset.
+1. clip.py - contains class Clip for audio clip. Features such as Phase encoded Mel Filterbank Energies (PEFBEs) and Filterbank Energies (FBEs) are extracted here.
+2. model.py - contains Model class which makes the CNN model's architechture.
+3. main.py - contains the functions to train,predict and evaluate the model.
+4. utils.py - contains functions for saving and loading the dataset.
