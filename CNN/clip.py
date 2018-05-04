@@ -2,9 +2,10 @@ import numpy as np
 import pydub
 import librosa
 import scipy
+import scipy.fftpack as fft
 
 silence_threshold = 60		# in -dB relative to max sound which is 0dB
-lambdaa = 10 				# amplitude of delta signal in PEFBEs
+lambdaa = 1				# amplitude of delta signal in PEFBEs
 n_mels = 60 				# feature dimension for each frame
 segment_length = 41			# 1 segment is 41 frames
 segment_hop_length = 20		# nearly 50% overlap
@@ -98,7 +99,7 @@ class Clip:
 		for frame in self.non_silent:
 			delta = lambdaa*scipy.signal.unit_impulse(Clip.frame_length)
 			frame += delta
-			fft_frame = np.fft.fft(frame)
+			fft_frame = fft.fft(frame)
 			normalised_frame = (fft_frame - np.mean(fft_frame)) / np.std(fft_frame)
 			power_frame = np.abs(fft_frame)**2
 			power_spectra.append(power_frame)	
@@ -111,7 +112,7 @@ class Clip:
 	def compute_FBEs(self):
 		power_spectra = []
 		for frame in self.non_silent:
-			fft_frame = np.fft.fft(frame)
+			fft_frame = fft.fft(frame)
 			power_frame = np.abs(fft_frame)**2
 			power_spectra.append(power_frame)	
 		power_spectra = np.array(power_spectra)

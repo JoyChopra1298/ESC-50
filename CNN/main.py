@@ -87,7 +87,7 @@ def predict(load_path):
 			print(clip_prediction[0][int(clip.target)])
 
 
-def evaluate(load_path,fold=None):
+def evaluate(load_path,test_fold=None):
 	model = make_model()
 	model.load_weights(load_path+"weights_best.hdf5")
 	
@@ -109,13 +109,13 @@ def evaluate(load_path,fold=None):
 	x_test =[]
 	y_test =[]
 	
-	if fold is None:
+	if test_fold is None:
 		for _fold in x:
 			x_test.extend(x[_fold])
 			y_test.extend(y[_fold])
 	else:
-		x_test.extend(x[fold])
-		y_test.extend(y[fold])
+		x_test.extend(x[test_fold])
+		y_test.extend(y[test_fold])
 
 	x_test = np.array(x_test)
 	y_test = np.array(y_test)	
