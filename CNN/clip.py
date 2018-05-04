@@ -4,7 +4,7 @@ import librosa
 import scipy
 
 silence_threshold = 60		# in -dB relative to max sound which is 0dB
-lambdaa = 1 				# amplitude of delta signal in PEFBEs
+lambdaa = 10 				# amplitude of delta signal in PEFBEs
 n_mels = 60 				# feature dimension for each frame
 segment_length = 41			# 1 segment is 41 frames
 segment_hop_length = 20		# nearly 50% overlap
@@ -52,7 +52,10 @@ class Clip:
 			################# Unsegmented features. 60 - dimensional ###################
 			self.compute_PEFBEs()
 			self.compute_FBEs()
-
+			self.num_frames = len(self.non_silent)
+			del self.is_silent
+			del self.non_silent
+			
 		######################## Segment the clip into smaller parts. 41 frames(50% overlap) in the PEFBE paper. ########################
 		self.mel_spectra = self.segment(self.mel_spectra.T).T
 		self.log_spectra = self.segment(self.log_spectra.T).T
@@ -97,7 +100,7 @@ class Clip:
 			frame += delta
 			fft_frame = np.fft.fft(frame)
 			normalised_frame = (fft_frame - np.mean(fft_frame)) / np.std(fft_frame)
-			power_frame = np.abs(normalised_frame)**2
+			power_frame = np.abs(fft_frame)**2
 			power_spectra.append(power_frame)	
 		power_spectra = np.array(power_spectra)
 		self.PEmel_spectra = librosa.feature.melspectrogram(S=power_spectra.T,n_mels=n_mels)
@@ -164,4 +167,4 @@ class Clip:
 		print(len(self.non_silent))	
 
 	def __repr__(self):
-		return '<Target:{0}|Category:{1}|Fold:{2}|Number of frames:{3}|Number of segments:{4}>\nClip name : {5}'.format(self.target,self.category,self.fold,len(self.non_silent),self.log_spectra.shape[2],self.path)
+		return '<Target:{0}|Category:{1}|Fold:{2}|Number of frames:{3}|Number of segments:{4}>\nClip name : {5}'.format(self.target,self.category,self.fold,self.num_frames,self.log_spectra.shape[2],self.path)

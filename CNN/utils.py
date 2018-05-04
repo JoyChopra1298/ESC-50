@@ -61,8 +61,8 @@ def load_dataset(pickle_path,only_one=False):
 
 if __name__=="__main__":
 
-    # pickle_dataset("./ESC-50-master")   # (NOTE This creates a file of size > 8GB.)
+    pickle_dataset("./ESC-50-master")   # (NOTE This creates a file of size in GBs.)
 
     # clips = load_dataset("./ESC-50-master/pickled",only_one=True)
-    clips = load_dataset("./ESC-50-master/pickled")
+    # clips = load_datsaset("./ESC-50-master/pickled")
     
